@@ -1,0 +1,22 @@
+{
+  "name": "bootstrap-form-builder",
+  "version": "0.0.1",
+  "description": "Render bootstrap forms from a simple schema description",
+  "main": "./lib/form-builder.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:harish2704/bootstrap-from-builder.git"
+  },
+  "keywords": [
+    "bootstrap",
+    "forms"
+  ],
+  "author": "Harish.K <harish@gmail.com>",
+  "license": "BSD",
+  "dependencies": {
+	"ect": "*"
+	}
+}
