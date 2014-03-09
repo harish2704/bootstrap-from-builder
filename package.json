@@ -17,6 +17,7 @@
   "author": "Harish.K <harish@gmail.com>",
   "license": "BSD",
   "dependencies": {
-	"ect": "*"
+	"ect": "*",
+	"lingo" : "*"
 	}
 }
