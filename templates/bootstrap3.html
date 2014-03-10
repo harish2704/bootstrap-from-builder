@@ -3,10 +3,8 @@
 
 <% gen.text = ( field ) -> : %>
 <div class="form-group">
-    <label for="input<%- lingo.capitalize field.name %>" class="col-sm-2 control-label"><%- lingo.capitalize field.name %></label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>">
-    </div>
+    <label for="input<%- lingo.capitalize field.name %>" ><%- lingo.capitalize field.name %></label>
+    <input type="text" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>">
 </div>
 <% end %>
 
