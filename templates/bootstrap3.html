@@ -1,5 +1,6 @@
 <% gen = {} %>
 <% lingo = @lingo %>
+
 <% gen.text = ( field ) -> : %>
 <div class="form-group">
     <label for="input<%- lingo.capitalize field.name %>" class="col-sm-2 control-label"><%- lingo.capitalize field.name %></label>
@@ -10,9 +11,20 @@
 <% end %>
 
 
+<% gen.boolean = ( field ) -> : %>
+  <div class="checkbox">
+    <label>
+      <input name="<%- field.name %>" type="checkbox"><%- field.name %>
+    </label>
+  </div>
+<% end %>
+
+<% gen.number = gen.text %>
+
+
 <form role="form">
     <% for name, field of @schema : %>
-        <%- gen[field.type] field %>
+        <% gen[field.type] field %>
     <% end %>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
