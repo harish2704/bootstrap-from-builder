@@ -1,31 +1,40 @@
-<% gen = {} %>
+<% controlls = {} %>
 <% lingo = @lingo %>
-
-<% gen.text = ( field ) -> : %>
+<% controlls.string = ( field ) -> : %>
 <div class="form-group">
     <label for="input<%- lingo.capitalize field.name %>" ><%- lingo.capitalize field.name %></label>
-    <input type="text" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>">
+    <input type="text" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>" value=<%- field.value %> >
 </div>
 <% end %>
-
-
-<% gen.boolean = ( field ) -> : %>
-  <div class="checkbox">
+<% controlls.boolean = ( field ) -> : %>
+<div class="checkbox">
     <label>
-      <input name="<%- field.name %>" type="checkbox"><%- field.name %>
+        <input name="<%- field.name %>" type="checkbox" <%- field.value? 'checked' :'' %> ><%- field.name %> 
     </label>
-  </div>
+</div>
 <% end %>
-
-<% gen.number = gen.text %>
-
-
-<form role="form">
-    <% for name, field of @schema : %>
-        <% gen[field.type] field %>
-    <% end %>
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
+<% controlls.select = ( field ) -> : %>
+<select id="<%- field.id %>" name="<%- field.name %>" class="form-control">
+<% for option in field.options : %>
+    <option <%-  'selected' if option == field.value %> ><%- option %></option>
+<% end %>
+</select>
+<% end %>
+<% controlls.text = (field) -> : %>
+<textarea class="form-control" id="text<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>"  rows="<%- field.rows ? '3' %>"><%- field.value %></textarea>
+<% end %>
+<% controlls.number = ( field ) -> : %>
+<div class="form-group">
+    <label for="input<%- lingo.capitalize field.name %>" ><%- lingo.capitalize field.name %></label>
+    <input type="number" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>" value=<%- field.value %> >
+</div>
+<% end %>
+<% renderAll = ( schema ) -> : %>
+<% for name, field of schema : %>
+<% controlls[field.type] field %>
+<% end %>
+<% end %>
+<% renderAll @schema %>
 
 
 
