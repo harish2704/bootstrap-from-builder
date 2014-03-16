@@ -14,11 +14,14 @@
 </div>
 <% end %>
 <% controlls.select = ( field ) -> : %>
-<select id="<%- field.id %>" name="<%- field.name %>" class="form-control" <%- 'multiple' if field.multiple  %>>
+<div class="form-group">
+    <label for="input<%- lingo.capitalize field.name %>" ><%- lingo.capitalize field.name %></label>
+    <select id="<%- field.id %>" name="<%- field.name %>" class="form-control" <%- 'multiple' if field.multiple  %>>
 <% for option in field.options : %>
-    <option <%-  'selected' if option == field.value %> ><%- option %></option>
+        <option <%-  'selected' if option == field.value %> ><%- option %></option>
 <% end %>
-</select>
+    </select>
+</div>
 <% end %>
 <% controlls.text = (field) -> : %>
 <textarea class="form-control" id="text<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>"  rows="<%- field.rows ? '3' %>"><%- field.value %></textarea>
