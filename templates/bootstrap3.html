@@ -1,44 +1,67 @@
 <% controlls = {} %>
-<% lingo = @lingo %>
-<% controlls.string = ( field ) -> : %>
+<% lingo = require 'lingo' %>
+<% Ect = require 'ect' %>
+<% ect = new Ect %>
+<% _ = require 'underscore' %>
+<% controlls.string = ( field ) -> %>
 <div class="form-group">
     <label for="input<%- lingo.capitalize field.name %>" ><%- lingo.capitalize field.name %></label>
-    <input type="text" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>" value=<%- field.value %> >
+    <input type="text" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.prefix %><%- field.name %>" placeholder="<%- field.name %>" value=<%- field.value %> >
 </div>
 <% end %>
-<% controlls.boolean = ( field ) -> : %>
+<% controlls.boolean = ( field ) ->  %>
 <div class="checkbox">
     <label>
-        <input name="<%- field.name %>" type="checkbox" <%- if field.value then 'checked' else '' %> ><%- field.name %> 
+        <input name="<%- field.prefix %><%- field.name %>" type="checkbox" <%- if field.value then 'checked' else '' %> ><%- field.name %> 
     </label>
 </div>
 <% end %>
-<% controlls.select = ( field ) -> : %>
+<% controlls.select = ( field ) ->  %>
 <div class="form-group">
     <label for="input<%- lingo.capitalize field.name %>" ><%- lingo.capitalize field.name %></label>
-    <select id="<%- field.id %>" name="<%- field.name %>" class="form-control" <%- 'multiple' if field.multiple  %>>
+    <select id="<%- field.id %>" name="<%- field.prefix %><%- field.name %>" class="form-control" <%- 'multiple' if field.multiple  %>>
 <% for option in field.options : %>
         <option <%-  'selected' if option == field.value %> ><%- option %></option>
 <% end %>
     </select>
 </div>
 <% end %>
-<% controlls.text = (field) -> : %>
-<textarea class="form-control" id="text<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>"  rows="<%- field.rows ? '3' %>"><%- field.value %></textarea>
+<% controlls.text = (field) ->  %>
+<textarea class="form-control" id="text<%- lingo.capitalize field.name %>" name="<%- field.prefix %><%- field.name %>" placeholder="<%- field.name %>"  rows="<%- field.rows ? '3' %>"><%- field.value %></textarea>
 <% end %>
-<% controlls.number = ( field ) -> : %>
+<% controlls.number = ( field ) ->  %>
 <div class="form-group">
     <label for="input<%- lingo.capitalize field.name %>" ><%- lingo.capitalize field.name %></label>
-    <input type="number" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.name %>" placeholder="<%- field.name %>" value=<%- field.value %> >
+    <input type="number" class="form-control" id="input<%- lingo.capitalize field.name %>" name="<%- field.prefix %><%- field.name %>" placeholder="<%- field.name %>" value=<%- field.value %> >
 </div>
 <% end %>
-<% renderAll = ( schema ) -> : %>
-<% for name, field of schema : %>
-<% controlls[field.type] field %>
-<% end %>
-<% end %>
-<% renderAll @schema %>
 
+<% controlls.array = (field) ->  %>
+<div class="row">
+<% fieldsGenerator = ect.compile (fieldCollection field) %>
+<a href="#" onclick="return addForm(this, '<%- field.name %>')" class="btn btn-success" >New</a>
+<script type="text/javascript" charset="utf-8">
+    var generator = generator || {};
+    generator['<%- field.name %>'] = <%- fieldsGenerator.toString() %>
+</script>
+</div>
+<% end %>
+
+<% fieldCollection = ( field ) ->  %>
+<fieldset>
+<legend><%- field.name %> </legend>
+<%- renderAll field.value %>
+</fieldset>
+<% end %>
+
+
+<% renderAll = ( schema ) -> %>
+<% for field in schema.fields : %>
+<%- controlls[field.type] field %>
+<% end %>
+<% end %>
+
+<%- renderAll @ %>
 
 
 <!-- vim: set ft=html.ect : -->
